@@ -6,6 +6,7 @@ This project extends the notebook Chapter1_Unsupervised_Learning_Methods_Michel.
 -K-means Clustering
 
 K-means clustering is well suited for this task because the radar echo waveforms from lead (open water) and sea ice exhibit distinct statistical characteristics in their amplitude and shape. Without requiring labeled training data, K-means can effectively separate echoes into groups based on similarity in the waveform feature space. In addition, the simplicity and interpretability of K-means make it particularly appropriate for exploratory analysis. By clustering the echoes into two groups, the resulting mean waveforms and standard deviations can be directly compared, enabling a clear physical interpretation of the differences between lead and sea ice echoes. The unsupervised nature of K-means also allows an independent evaluation against the ESA reference classification.
+![Gaussian Mixture Model](K.png)
 
 -Gaussian Mixture Models
 
