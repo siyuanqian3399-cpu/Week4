@@ -58,5 +58,6 @@ plt.show()
 from google.colab import drive
 drive.mount('/content/drive')
 ```
-
+# Result
+Result was upload to the link "Chapter1_Unsupervised_Learning_Methods_Michel.ipynb".
 
