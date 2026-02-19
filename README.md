@@ -43,7 +43,17 @@ plt.show()
 
 
 # Before the start
-Connect the 
+* Using pip install the data set
+  ```sh
+  !pip install netCDF4
+  ```
+  ```sh
+  !pip install basemap
+  ```
+  ```sh
+  !pip install cartopy
+  ```
+*  Google Drive based on Google Colab
 ```sh
 from google.colab import drive
 drive.mount('/content/drive')
