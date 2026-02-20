@@ -129,6 +129,9 @@ The figures below illustrate waveform characteristics and GMM clustering results
 
 - Mean waveform for each of the ten GMM clusters.
 
+For a complete demonstration of the project workflow, data processing, and analysis steps, please refer to **week4homeworkQiansiyuan.ipynb**.
+
+
 ---
 
 ### Additional Clustered Waveforms
