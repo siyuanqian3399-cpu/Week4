@@ -61,48 +61,34 @@ drive.mount('/content/drive')
 
 ## 🧠 Core Implementation (Full Pipeline)
 
-The following code shows the complete workflow of waveform preprocessing, feature extraction, GMM clustering, and Lead / Sea Ice separation.  
-This implementation is adapted from **week4homeworkQiansiyuan.ipynb**.
+The following code demonstrates the complete workflow of this project, including waveform normalization, feature extraction, Gaussian Mixture Model (GMM) clustering, and Lead / Sea Ice classification.  
+The implementation is adapted from **week4homeworkQiansiyuan.ipynb** and corresponds to the visual results shown above.
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.mixture import GaussianMixture
 
-# --------------------------------------------------
-# 1. Load waveform data
-# --------------------------------------------------
-# waveforms: shape = (N_samples, N_bins)
-# Assume waveforms are already loaded as a NumPy array
-# Example:
+# Assume waveforms is a NumPy array with shape (N_samples, N_bins)
 # waveforms = np.load("waveforms.npy")
 
 N_samples, N_bins = waveforms.shape
 
-# --------------------------------------------------
-# 2. Normalize waveforms
-# --------------------------------------------------
+# Normalize waveforms
 waveforms_norm = waveforms / np.max(waveforms, axis=1, keepdims=True)
 
-# --------------------------------------------------
-# 3. Feature extraction
-# --------------------------------------------------
-# Peak position and amplitude
+# Feature extraction
 peak_idx = np.argmax(waveforms_norm, axis=1)
 peak_val = np.max(waveforms_norm, axis=1)
 
-# Trailing energy after the peak
 tail_energy = np.array([
     np.sum(waveforms_norm[i, peak_idx[i]:])
     for i in range(N_samples)
 ])
 
-# Feature matrix for clustering
 features = np.column_stack((peak_val, tail_energy))
 
-# --------------------------------------------------
-# 4. GMM clustering
-# --------------------------------------------------
+# GMM clustering
 n_clusters = 5
 gmm = GaussianMixture(
     n_components=n_clusters,
@@ -112,31 +98,21 @@ gmm = GaussianMixture(
 
 labels = gmm.fit_predict(features)
 
-# --------------------------------------------------
-# 5. Cluster-wise mean waveforms
-# --------------------------------------------------
+# Cluster-wise mean waveforms
 cluster_means = np.array([
     np.mean(waveforms[labels == k], axis=0)
     for k in range(n_clusters)
 ])
 
-# --------------------------------------------------
-# 6. Lead / Sea Ice classification
-# --------------------------------------------------
-# Use peak amplitude as a simple physical criterion
+# Lead / Sea Ice separation
 threshold = np.percentile(peak_val, 90)
-
 lead_mask = peak_val > threshold
 ice_mask = ~lead_mask
 
 lead_mean = np.mean(waveforms[lead_mask], axis=0)
 ice_mean = np.mean(waveforms[ice_mask], axis=0)
 
-# --------------------------------------------------
-# 7. Visualization
-# --------------------------------------------------
-
-# (a) Raw waveforms (sub-sampled)
+# Visualization
 plt.figure(figsize=(6, 4))
 for i in range(0, N_samples, 10):
     plt.plot(waveforms[i], alpha=0.2)
@@ -145,7 +121,6 @@ plt.xlabel("Gate Bin")
 plt.ylabel("Power")
 plt.show()
 
-# (b) Lead vs Sea Ice average waveforms
 plt.figure(figsize=(6, 4))
 plt.plot(lead_mean, label="Lead", linewidth=2)
 plt.plot(ice_mean, label="Sea Ice", linewidth=2)
@@ -155,7 +130,6 @@ plt.xlabel("Gate Bin")
 plt.ylabel("Power")
 plt.show()
 
-# (c) Mean waveform per GMM cluster
 plt.figure(figsize=(6, 4))
 for k in range(n_clusters):
     plt.plot(cluster_means[k], label=f"Cluster {k}")
@@ -165,6 +139,7 @@ plt.xlabel("Gate Bin")
 plt.ylabel("Power")
 plt.show()
 
+```
 
 ## 📊 Results (Figures)
 
