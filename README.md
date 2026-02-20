@@ -62,7 +62,7 @@ drive.mount('/content/drive')
 ## 🧠 Core Implementation (Full Pipeline)
 
 The following code demonstrates the complete workflow of this project, including waveform normalization, feature extraction, Gaussian Mixture Model (GMM) clustering, and Lead / Sea Ice classification.  
-The implementation is adapted from **week4homeworkQiansiyuan.ipynb** and corresponds to the visual results shown above.
+
 
 ```python
 import numpy as np
